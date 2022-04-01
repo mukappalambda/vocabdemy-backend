@@ -23,5 +23,11 @@ make dev
 
 ```bash
 cp .env{.example,}
-docker-compose up -d
+make prod
+```
+
+## Test
+
+```bash
+curl localhost:8000
 ```
