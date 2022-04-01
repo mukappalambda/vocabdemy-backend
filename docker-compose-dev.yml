@@ -6,14 +6,14 @@ services:
     image: python:${PYTHON_VERSION}
     container_name: python
     restart: always
-    working_dir: /code/src
+    working_dir: /code
     ports:
       - '8000:8000'
     environment:
       POSTGRES_HOST: ${POSTGRES_HOST}
     volumes:
-      - ${PWD}/app/src:/code/src
-      - ${PWD}/app/requirements.txt:/code/requirements.txt
+      - ${PWD}/app:/code/
+      - ${PWD}/requirements.txt:/code/requirements.txt
     command:
       - bash
       - -c

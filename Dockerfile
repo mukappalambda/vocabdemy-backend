@@ -1,7 +1,7 @@
 ARG PYTHON_VERSION
 FROM python:${PYTHON_VERSION}
 
-WORKDIR /code/src
+WORKDIR /code
 
 COPY requirements.txt requirements.txt
 
@@ -16,7 +16,7 @@ RUN pip install --upgrade pip \
 USER root
 
 ENV PATH="/root/.local/bin:${PATH}"
-COPY  src/ /code/src
+COPY  app/ /code
 EXPOSE 8000
 
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
