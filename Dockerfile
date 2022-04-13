@@ -16,7 +16,7 @@ RUN pip install --upgrade pip \
 USER root
 
 ENV PATH="/root/.local/bin:${PATH}"
-COPY  app/ /code
+COPY  app/ /code/app/
 EXPOSE 8000
 
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]

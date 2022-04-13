@@ -19,7 +19,7 @@ tmp_test:
 
 .PHONY: dev
 dev:
-	docker-compose -f docker-compose-dev.yml up -d
+	docker-compose -f docker-compose-dev.yml up
 
 .PHONY: prod
 prod:
