@@ -4,7 +4,7 @@ from ..database import Base
 
 
 class Group(Base):
-  __tablename__ = "groups"
+    __tablename__ = "groups"
 
-  id = Column(Integer, primary_key= True)
-  name = Column(String(30))
+    id = Column(Integer, primary_key=True)
+    name = Column(String(30))

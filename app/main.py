@@ -13,8 +13,7 @@ Base.metadata.create_all(bind=engine)
 app = FastAPI()
 app.include_router(vocab.router)
 
+
 @app.get("/")
 def read_root():
-  return {"Version": "0.0.1", "Description": "Welcome to Vocabdemy."}
-
-
+    return {"Version": "0.0.1", "Description": "Welcome to Vocabdemy."}

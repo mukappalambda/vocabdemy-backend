@@ -4,7 +4,7 @@ from ..database import Base
 
 
 class Vocab(Base):
-  __tablename__ = "vocabs"
+    __tablename__ = "vocabs"
 
-  id = Column(Integer, primary_key= True)
-  vocab = Column(String(30))
+    id = Column(Integer, primary_key=True)
+    vocab = Column(String(30))
