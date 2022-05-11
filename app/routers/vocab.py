@@ -1,8 +1,10 @@
-from fastapi import APIRouter, Depends
-from app.models.loaded_base import load_models_base
-from app.dependencies.controller import get_controller
-from app.database import database
+from app import schema
 from app.controllers import vocab as vocab_
+from app.database import database
+from app.dependencies.controller import get_controller
+from app.models.loaded_base import load_models_base
+from app.models.vocab import Vocab
+from fastapi import APIRouter, Depends, Response, status
 
 router = APIRouter(
     prefix="/vocabs"
@@ -10,11 +12,20 @@ router = APIRouter(
 Base = load_models_base()
 
 
-@router.get("/")
+@router.get("")
 def read_vocabs(controller=Depends(get_controller(database, vocab_.VocabController))):
     return controller.get_vocabs()
 
 
-@router.post("/")
-def create_vocab(vocab: str, controller=Depends(get_controller(database, vocab_.VocabController))):
-    return controller.create_vocab()
+@router.post("", status_code=status.HTTP_201_CREATED)
+def create_vocab(
+        vocab: schema.VocabBase,
+        controller=Depends(get_controller(database, vocab_.VocabController)),
+):
+    try:
+        controller.create_vocab(vocab)
+    except Exception as e:
+        print(e, "Vocab creation failed")
+        # TODO add status code
+
+    return "Create successfully."
