@@ -8,7 +8,7 @@ class VocabController:
         self.database = database
 
     def get_vocabs(self):
-        return self.database.query().all()
+        return self.database.query(Vocab).all()
 
     def create_vocab(self, vocab: VocabBase):
 
