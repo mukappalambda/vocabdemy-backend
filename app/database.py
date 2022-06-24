@@ -27,13 +27,22 @@ class Database:
             db.close()
 
 
-# init
 SQLALCHEMY_DATABASE_URL = "postgresql://postgres:postgres@postgres:5432/demo"
-database = Database(SQLALCHEMY_DATABASE_URL)
-database.create_engine()
-database.create_sessions_local()
+
+
+def init_db() -> Database:
+    """
+    Initialize database
+    """
+    database = Database(SQLALCHEMY_DATABASE_URL)
+    database.create_engine()
+    database.create_sessions_local()
+
+    return database
+
 
 # export
+database = init_db()
 engine = database.engine
 Base = database.get_base()
 get_db = database.get_db
