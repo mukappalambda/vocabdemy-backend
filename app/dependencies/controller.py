@@ -1,8 +1,9 @@
-def get_controller(database, controller):
-    def _get_controller():
-        db = database.sessions_local()
-        try:
-            yield controller(db)
-        finally:
-            db.close()
+from fastapi import Depends
+from app.dependencies.db_session import get_db_session
+from sqlalchemy.orm import Session
+
+
+def get_controller(controller):
+    def _get_controller(db: Session = Depends(get_db_session)):
+        yield controller(db)
     return _get_controller
