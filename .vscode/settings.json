@@ -1,5 +1,8 @@
 {
     "cSpell.words": [
-        "pydantic"
+        "fastapi",
+        "pydantic",
+        "sqlalchemy",
+        "vocabs"
     ]
 }
