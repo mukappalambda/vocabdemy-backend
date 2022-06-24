@@ -1,6 +1,5 @@
 from app import schema
 from app.controllers import vocab as vocab_
-from app.database import database
 from app.dependencies.controller import get_controller
 from app.models.loaded_base import load_models_base
 from app.models.vocab import Vocab
@@ -13,14 +12,14 @@ Base = load_models_base()
 
 
 @router.get("")
-def read_vocabs(controller=Depends(get_controller(database, vocab_.VocabController))):
+def read_vocabs(controller=Depends(get_controller(vocab_.VocabController))):
     return controller.get_vocabs()
 
 
 @router.post("", status_code=status.HTTP_201_CREATED)
 def create_vocab(
         vocab: schema.VocabBase,
-        controller=Depends(get_controller(database, vocab_.VocabController)),
+        controller=Depends(get_controller(vocab_.VocabController)),
 ):
     try:
         controller.create_vocab(vocab)
