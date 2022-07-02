@@ -17,8 +17,13 @@ class VocabController:
         self.database.add(v)
         self.database.commit()
 
-    def delete_vocab(self):
-        pass
+    def delete_vocab(self, id: int):
+        """
+        Receive an id and remove the data
+        """
+        self.database.query(Vocab).filter(Vocab.id == id).delete()
+
+        self.database.commit()
 
     def update_vocab(self, vocab_object: UpdateVocabObject, id: int):
         """
