@@ -13,7 +13,7 @@ class TestVocab:
         )
         print(response)
 
-        assert response.status_code == 201
+        assert response.status_code == status.HTTP_201_CREATED
 
     def test_update_vocab(self):
 
