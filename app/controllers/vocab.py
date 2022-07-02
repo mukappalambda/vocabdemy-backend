@@ -1,5 +1,5 @@
 from app.models.vocab import Vocab
-from app.schema.vocab import VocabBase
+from app.schema.vocab import UpdateVocabObject, VocabBase
 from sqlalchemy.orm import Session
 
 
@@ -18,9 +18,15 @@ class VocabController:
         self.database.commit()
 
     def delete_vocab(self):
-        # TODO
         pass
 
-    def update_vocab(self):
-        # TODO
-        pass
+    def update_vocab(self, vocab_object: UpdateVocabObject, id: int):
+        """
+        Receive vocab id and get the data
+        """
+        vocab = self.database.query(Vocab).get(id)
+
+        for column_name, value in vocab_object:
+            setattr(vocab, column_name, value)
+
+        self.database.commit()
