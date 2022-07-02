@@ -2,8 +2,7 @@ from app import schema
 from app.controllers import vocab as vocab_
 from app.dependencies.controller import get_controller
 from app.models.loaded_base import load_models_base
-from app.models.vocab import Vocab
-from fastapi import APIRouter, Depends, Response, status
+from fastapi import APIRouter, Depends, status
 
 router = APIRouter(
     prefix="/vocabs"
