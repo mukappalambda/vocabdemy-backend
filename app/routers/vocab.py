@@ -28,3 +28,17 @@ def create_vocab(
         # TODO add status code
 
     return "Create successfully."
+
+
+@router.put("/{id}", status_code=status.HTTP_204_NO_CONTENT)
+def update_vocab(
+    id: int,
+    vocab: schema.UpdateVocabObject,
+    controller: vocab_.VocabController = Depends(
+        get_controller(vocab_.VocabController))
+):
+    try:
+        controller.update_vocab(vocab, id)
+    except Exception as e:
+        print(e, f"Something went wrong when updating Vocab {id}.")
+    return "Update {id} successfully."
