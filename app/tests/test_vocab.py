@@ -25,3 +25,13 @@ class TestVocab:
         )
 
         assert response.status_code == status.HTTP_204_NO_CONTENT
+
+    def test_delete_vocab(self):
+
+        id = 1
+
+        response = client.delete(
+            f"/vocabs/{id}",
+        )
+
+        assert response.status_code == status.HTTP_202_ACCEPTED
