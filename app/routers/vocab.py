@@ -41,3 +41,16 @@ def update_vocab(
     except Exception as e:
         print(e, f"Something went wrong when updating Vocab {id}.")
     return "Update {id} successfully."
+
+
+@router.delete("/{id}", status_code=status.HTTP_202_ACCEPTED)
+def delete_vocab(
+    id: int,
+    controller: vocab_.VocabController = Depends(
+        get_controller(vocab_.VocabController))
+):
+    try:
+        controller.delete_vocab(id)
+    except Exception as e:
+        print(e, f"Something went wrong when deleting Vocab {id}.")
+    return "Update {id} successfully."
