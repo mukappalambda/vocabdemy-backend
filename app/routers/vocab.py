@@ -22,7 +22,7 @@ def create_vocab(
 ):
     try:
         controller.create_vocab(vocab)
-    except Exception as e:
+    except Exception as e:  # pylint: disable=broad-except
         print(e, "Vocab creation failed")
         # TODO add status code
 
@@ -38,7 +38,7 @@ def update_vocab(
 ):
     try:
         controller.update_vocab(vocab, id)
-    except Exception as e:
+    except Exception as e:  # pylint: disable=broad-except
         print(e, f"Something went wrong when updating Vocab {id}.")
     return "Update {id} successfully."
 
@@ -51,6 +51,6 @@ def delete_vocab(
 ):
     try:
         controller.delete_vocab(id)
-    except Exception as e:
+    except Exception as e:  # pylint: disable=broad-except
         print(e, f"Something went wrong when deleting Vocab {id}.")
     return "Update {id} successfully."
