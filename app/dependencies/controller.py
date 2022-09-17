@@ -6,4 +6,5 @@ from sqlalchemy.orm import Session
 def get_controller(controller):
     def _get_controller(db: Session = Depends(get_db_session)):
         yield controller(db)
+
     return _get_controller

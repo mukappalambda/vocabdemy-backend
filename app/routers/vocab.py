@@ -4,9 +4,7 @@ from app.dependencies.controller import get_controller
 from app.models.loaded_base import load_models_base
 from fastapi import APIRouter, Depends, status
 
-router = APIRouter(
-    prefix="/vocabs"
-)
+router = APIRouter(prefix="/vocabs")
 Base = load_models_base()
 
 
@@ -17,8 +15,8 @@ def read_vocabs(controller=Depends(get_controller(vocab_.VocabController))):
 
 @router.post("", status_code=status.HTTP_201_CREATED)
 def create_vocab(
-        vocab: schema.VocabBase,
-        controller=Depends(get_controller(vocab_.VocabController)),
+    vocab: schema.VocabBase,
+    controller=Depends(get_controller(vocab_.VocabController)),
 ):
     try:
         controller.create_vocab(vocab)
@@ -34,7 +32,8 @@ def update_vocab(
     id: int,
     vocab: schema.UpdateVocabObject,
     controller: vocab_.VocabController = Depends(
-        get_controller(vocab_.VocabController))
+        get_controller(vocab_.VocabController)
+    ),
 ):
     try:
         controller.update_vocab(vocab, id)
@@ -47,7 +46,8 @@ def update_vocab(
 def delete_vocab(
     id: int,
     controller: vocab_.VocabController = Depends(
-        get_controller(vocab_.VocabController))
+        get_controller(vocab_.VocabController)
+    ),
 ):
     try:
         controller.delete_vocab(id)

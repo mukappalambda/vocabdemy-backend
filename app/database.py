@@ -17,7 +17,8 @@ class Database:
 
     def create_sessions_local(self):
         self.sessions_local = sessionmaker(
-            autocommit=False, autoflush=False, bind=self.engine)
+            autocommit=False, autoflush=False, bind=self.engine
+        )
 
     def get_db(self):
         db = self.sessions_local()
