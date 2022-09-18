@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "vocabdemy-backend"
+version = "0.1.0"
+description = ""
+authors = ["mukappalambda <maokailan24@gmail.com>"]
+readme = "README.md"
+packages = [{include = "vocabdemy_backend"}]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+fastapi = "^0.85.0"
+uvicorn = {extras = ["standard"], version = "^0.18.3"}
+psycopg2-binary = "^2.9.3"
+SQLAlchemy = "^1.4.41"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

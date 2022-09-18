@@ -15,7 +15,7 @@ A Python App for Vocabulary Memorizer
 ---
 
 ```bash
-git clone git@github.com:mukappalambda/python-examples.git
+git clone git@github.com:mukappalambda/vocabdemy-backend.git
 ```
 
 ```bash
@@ -29,6 +29,16 @@ cd vocabdemy-backend
 ```bash
 cp .env{.example,}
 make dev
+```
+
+This project uses [poetry](https://github.com/python-poetry/poetry) to manage depedencies.
+
+For the purpose of future reference, the following are steps to add or remove certain package:
+
+```bash
+poetry add <some_python_package>
+poetry export -o requirements.txt --without-hashes
+# remember to version control these files: poetry.lock, pyproject.toml, requirements.txt
 ```
 
 ---
