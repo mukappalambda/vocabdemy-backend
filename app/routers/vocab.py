@@ -1,3 +1,6 @@
+"""
+Vocab Router
+"""
 from app import schema
 from app.controllers import vocab as vocab_
 from app.dependencies.controller import get_controller
@@ -10,6 +13,9 @@ Base = load_models_base()
 
 @router.get("")
 def read_vocabs(controller=Depends(get_controller(vocab_.VocabController))):
+    """
+    Read vocabs
+    """
     return controller.get_vocabs()
 
 
@@ -18,6 +24,9 @@ def create_vocab(
     vocab: schema.VocabBase,
     controller=Depends(get_controller(vocab_.VocabController)),
 ):
+    """
+    Add a vocab
+    """
     try:
         controller.create_vocab(vocab)
     except Exception as e:  # pylint: disable=broad-except
@@ -35,6 +44,9 @@ def update_vocab(
         get_controller(vocab_.VocabController)
     ),
 ):
+    """
+    Update the data of vocab
+    """
     try:
         controller.update_vocab(vocab, id)
     except Exception as e:  # pylint: disable=broad-except
@@ -49,6 +61,9 @@ def delete_vocab(
         get_controller(vocab_.VocabController)
     ),
 ):
+    """
+    Delete a vocab
+    """
     try:
         controller.delete_vocab(id)
     except Exception as e:  # pylint: disable=broad-except
