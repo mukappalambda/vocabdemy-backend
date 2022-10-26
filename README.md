@@ -61,6 +61,7 @@ $ make prod
 $ docker-compose ps
   Name                Command               State           Ports         
 --------------------------------------------------------------------------
+pgweb      /usr/bin/pgweb --bind=0.0. ...   Up      0.0.0.0:8081->8081/tcp
 postgres   docker-entrypoint.sh postgres    Up      0.0.0.0:5432->5432/tcp
 python     uvicorn app.main:app --hos ...   Up      0.0.0.0:8000->8000/tcp
 # tear down the stack

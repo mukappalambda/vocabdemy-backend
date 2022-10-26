@@ -1,34 +1,32 @@
 """
 Vocab Router
 """
-from app import schema
-from app.controllers import vocab as vocab_
-from app.dependencies.controller import get_controller
-from app.models.loaded_base import load_models_base
+from app import schemas
+from app.api.dependencies import get_db
+from app.crud import crud_vocab
 from fastapi import APIRouter, Depends, status
+from sqlalchemy.orm import Session
 
 router = APIRouter(prefix="/vocabs")
-Base = load_models_base()
 
 
 @router.get("")
-def read_vocabs(controller=Depends(get_controller(vocab_.VocabController))):
-    """
-    Read vocabs
-    """
-    return controller.get_vocabs()
+async def read_vocabs(db: Session = Depends(get_db)):
+    vocabs = crud_vocab.get_multi(db=db)
+    return vocabs
 
 
 @router.post("", status_code=status.HTTP_201_CREATED)
-def create_vocab(
-    vocab: schema.VocabBase,
-    controller=Depends(get_controller(vocab_.VocabController)),
+async def create_vocab(
+    db: Session = Depends(get_db),
+    *,
+    vocab: schemas.VocabBase,
 ):
     """
     Add a vocab
     """
     try:
-        controller.create_vocab(vocab)
+        crud_vocab.create(db=db, vocab_in=vocab)
     except Exception as e:  # pylint: disable=broad-except
         print(e, "Vocab creation failed")
         # TODO add status code
@@ -37,35 +35,34 @@ def create_vocab(
 
 
 @router.put("/{id}", status_code=status.HTTP_204_NO_CONTENT)
-def update_vocab(
+async def update_vocab(
+    db: Session = Depends(get_db),
+    *,
     id: int,
-    vocab: schema.UpdateVocabObject,
-    controller: vocab_.VocabController = Depends(
-        get_controller(vocab_.VocabController)
-    ),
+    vocab: schemas.UpdateVocabObject,
 ):
     """
     Update the data of vocab
     """
     try:
-        controller.update_vocab(vocab, id)
+        # controller.update_vocab(vocab, id)
+        crud_vocab.update(db=db, id=id, vocab_in=vocab)
     except Exception as e:  # pylint: disable=broad-except
         print(e, f"Something went wrong when updating Vocab {id}.")
     return "Update {id} successfully."
 
 
 @router.delete("/{id}", status_code=status.HTTP_202_ACCEPTED)
-def delete_vocab(
+async def delete_vocab(
+    db: Session = Depends(get_db),
+    *,
     id: int,
-    controller: vocab_.VocabController = Depends(
-        get_controller(vocab_.VocabController)
-    ),
 ):
     """
     Delete a vocab
     """
     try:
-        controller.delete_vocab(id)
+        crud_vocab.delete(db=db, id=id)
     except Exception as e:  # pylint: disable=broad-except
         print(e, f"Something went wrong when deleting Vocab {id}.")
-    return "Update {id} successfully."
+    return "Delete {id} successfully."
