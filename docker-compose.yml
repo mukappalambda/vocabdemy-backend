@@ -17,7 +17,7 @@ services:
       POSTGRES_HOST: ${POSTGRES_HOST}
 
   postgres:
-    image: postgres:14
+    image: postgres:${POSTGRES_VERSION}
     hostname: postgres
     container_name: postgres
     ports:
