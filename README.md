@@ -27,11 +27,11 @@ cd vocabdemy-backend
 ## Development Mode
 
 ```bash
-cp .env{.example,}
-make dev
+$ cp .env{.example,}
+$ make dev
 ```
 
-This project uses [poetry](https://github.com/python-poetry/poetry) to manage depedencies.
+This project uses [poetry](https://github.com/python-poetry/poetry) to manage dependencies.
 
 For the purpose of future reference, the following are steps to add or remove certain package:
 
@@ -41,13 +41,30 @@ poetry export -o requirements.txt --without-hashes
 # remember to version control these files: poetry.lock, pyproject.toml, requirements.txt
 ```
 
+**Build the Docker Image**
+
+```bash
+$ cp .env.example .env
+$ docker-compose build
+$ docker images -f reference=vocabdemy
+REPOSITORY   TAG       IMAGE ID       CREATED          SIZE
+vocabdemy    0.1.0     9d094976ca7e   12 seconds ago   1.02GB
+```
+
 ---
 
 ## Production Mode
 
 ```bash
-cp .env{.example,}
-make prod
+$ cp .env{.example,}
+$ make prod
+$ docker-compose ps
+  Name                Command               State           Ports         
+--------------------------------------------------------------------------
+postgres   docker-entrypoint.sh postgres    Up      0.0.0.0:5432->5432/tcp
+python     uvicorn app.main:app --hos ...   Up      0.0.0.0:8000->8000/tcp
+# tear down the stack
+$ docker-compose down -v
 ```
 
 ## Test
