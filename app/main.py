@@ -1,17 +1,14 @@
-from typing import Optional
+from fastapi import FastAPI
 
-from fastapi import Depends, FastAPI
+from app.api.api_v1.api import api_router
+from app.core.config import settings
+from app.db.base import Base
+from app.db.session import engine
 
-from app.database import engine, get_db
-from app.models.loaded_base import load_models_base
-
-from .routers import vocab
-
-Base = load_models_base()
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
-app.include_router(vocab.router)
+app.include_router(router=api_router, prefix=settings.API_V1_STR)
 
 
 @app.get("/")
