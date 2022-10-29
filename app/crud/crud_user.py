@@ -1,7 +1,8 @@
 from typing import List
 
 from app.models.user import User
-from app.schemas.user import UserInDB
+from app.schemas.user import UserCreate, UserInDB
+from fastapi.encoders import jsonable_encoder
 from sqlalchemy.orm import Session
 
 
@@ -24,4 +25,18 @@ def get(db: Session, id: int) -> UserInDB:
     >>> user = get(db=db)
     """
     obj = db.query(User).get(id)
+    return obj
+
+
+def create(db: Session, obj_in: UserCreate) -> UserInDB:
+    """
+    Examples
+    --------
+    >>> user = create(db=db, obj_in=obj_in)
+    """
+    obj_dict = jsonable_encoder(obj_in)
+    obj = User(**obj_dict)
+    db.add(obj)
+    db.commit()
+    db.refresh(obj)
     return obj

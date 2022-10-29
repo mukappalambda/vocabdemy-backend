@@ -10,6 +10,14 @@ class UserBase(BaseModel):
     username: str
 
 
+class UserRead(UserBase):
+    created_at: Union[datetime, None]
+
+
+class UserCreate(UserBase):
+    password: str
+
+
 class UserInDBBase(UserBase):
     id: int = Field(example=1)
     created_at: datetime = Field(example=datetime.utcnow())
