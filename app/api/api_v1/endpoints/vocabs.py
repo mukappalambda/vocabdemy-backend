@@ -7,7 +7,7 @@ from app.crud import crud_vocab
 from fastapi import APIRouter, Depends, status
 from sqlalchemy.orm import Session
 
-router = APIRouter(prefix="/vocabs")
+router = APIRouter()
 
 
 @router.get("")
