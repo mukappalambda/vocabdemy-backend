@@ -1,2 +1,2 @@
-from .user import UserBase, UserInDB
+from .user import UserBase, UserCreate, UserInDB
 from .vocab import UpdateVocabObject, VocabBase
