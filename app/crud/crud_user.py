@@ -15,3 +15,13 @@ def get_multi(db: Session) -> List[UserInDB]:
     for obj in objs:
         print(obj)
     return objs
+
+
+def get(db: Session, id: int) -> UserInDB:
+    """
+    Examples
+    --------
+    >>> user = get(db=db)
+    """
+    obj = db.query(User).get(id)
+    return obj
