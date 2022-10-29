@@ -18,6 +18,10 @@ class UserCreate(UserBase):
     password: str
 
 
+class UserUpdate(UserBase):
+    pass
+
+
 class UserInDBBase(UserBase):
     id: int = Field(example=1)
     created_at: datetime = Field(example=datetime.utcnow())

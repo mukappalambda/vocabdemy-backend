@@ -48,3 +48,21 @@ async def create_user(
     """
     obj = crud_user.create(db=db, obj_in=obj_in)
     return obj
+
+
+@router.put(
+    "/{id}",
+    response_model=schemas.UserInDB,
+)
+async def update_user(
+    db: Session = Depends(get_db),
+    *,
+    id: int,
+    obj_in: schemas.UserUpdate,
+):
+    """
+    Update the user
+    """
+    obj = crud_user.update(db=db, id=id, obj_in=obj_in)
+    check_obj_or_raise_exception(obj=obj)
+    return obj
