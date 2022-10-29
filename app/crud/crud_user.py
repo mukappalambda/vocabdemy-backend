@@ -61,3 +61,17 @@ def update(db: Session, id: int, obj_in: UserUpdate) -> Union[UserInDB, None]:
     db.commit()
     db.refresh(obj)
     return obj
+
+
+def delete(db: Session, id: int) -> Union[UserInDB, None]:
+    """
+    Examples
+    --------
+    >>> obj = delete(db=db, id=id)
+    """
+    obj = db.query(User).get(id)
+    if not obj:
+        return
+    db.delete(obj)
+    db.commit()
+    return obj
