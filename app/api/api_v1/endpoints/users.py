@@ -66,3 +66,21 @@ async def update_user(
     obj = crud_user.update(db=db, id=id, obj_in=obj_in)
     check_obj_or_raise_exception(obj=obj)
     return obj
+
+
+@router.delete(
+    "/{id}",
+    response_model=schemas.UserInDB,
+    status_code=status.HTTP_202_ACCEPTED,
+)
+async def delete_user(
+    db: Session = Depends(get_db),
+    *,
+    id: int,
+):
+    """
+    Delete the user
+    """
+    obj = crud_user.delete(db=db, id=id)
+    check_obj_or_raise_exception(obj=obj)
+    return obj
