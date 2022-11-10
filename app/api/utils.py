@@ -1,5 +1,6 @@
-from app.schemas import UserInDB
 from fastapi import HTTPException, status
+
+from app.schemas import UserInDB
 
 
 def check_obj_or_raise_exception(obj: UserInDB):
