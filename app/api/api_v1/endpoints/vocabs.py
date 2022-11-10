@@ -1,11 +1,12 @@
 """
 Vocab Router
 """
+from fastapi import APIRouter, Depends, status
+from sqlalchemy.orm import Session
+
 from app import schemas
 from app.api.dependencies import get_db
 from app.crud import crud_vocab
-from fastapi import APIRouter, Depends, status
-from sqlalchemy.orm import Session
 
 router = APIRouter()
 

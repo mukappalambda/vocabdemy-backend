@@ -1,5 +1,6 @@
-from app.db.base_class import Base
 from sqlalchemy import TIMESTAMP, Column, Integer, String, text
+
+from app.db.base_class import Base
 
 
 class User(Base):

@@ -24,3 +24,7 @@ dev:
 .PHONY: prod
 prod:
 	docker-compose up -d
+
+.PHONY: style
+style:
+	isort --profile black . && black .

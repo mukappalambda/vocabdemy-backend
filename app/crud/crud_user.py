@@ -1,10 +1,11 @@
 from datetime import datetime
 from typing import List, Union
 
-from app.models.user import User
-from app.schemas.user import UserCreate, UserInDB, UserUpdate
 from fastapi.encoders import jsonable_encoder
 from sqlalchemy.orm import Session
+
+from app.models.user import User
+from app.schemas.user import UserCreate, UserInDB, UserUpdate
 
 
 def get_multi(db: Session) -> List[UserInDB]:
