@@ -3,8 +3,8 @@ name = "vocabdemy-backend"
 version = "0.1.0"
 description = ""
 authors = [
-    kevinliao852 <q85292542000@gmail.com>",
-    mukappalambda <maokailan24@gmail.com>",
+    "kevinliao852 <q85292542000@gmail.com>",
+    "mukappalambda <maokailan24@gmail.com>",
 ]
 readme = "README.md"
 packages = [{include = "vocabdemy_backend"}]
