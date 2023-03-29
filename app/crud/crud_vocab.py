@@ -24,7 +24,7 @@ def create(db: Session, vocab_in: VocabBase) -> Vocab:
     return obj
 
 
-def update(db: Session, id: int, vocab_in: Vocab) -> Vocab:
+def update(db: Session, id: int, vocab_in) -> Vocab:
     """
     Receive vocab id and get the data
     """
