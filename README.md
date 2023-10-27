@@ -26,11 +26,20 @@ cd vocabdemy-backend
 
 ---
 
+## Install Project Dependencies
+
+After having [poetry](https://github.com/python-poetry/poetry) installed on your machine, run:
+
+```bash
+make install
+```
+
+---
 ## Development Mode
 
 ```bash
-$ cp .env{.example,}
-$ make dev
+make env
+make dev
 ```
 
 This project uses [poetry](https://github.com/python-poetry/poetry) to manage dependencies.
@@ -39,16 +48,15 @@ For the purpose of future reference, the following are steps to add or remove ce
 
 ```bash
 poetry add <some_python_package>
-poetry export -o requirements.txt --without-hashes
-# remember to version control these files: poetry.lock, pyproject.toml, requirements.txt
+make poetry-lock && make poetry-export
 ```
 
 **Build the Docker Image**
 
 ```bash
-$ cp .env.example .env
-$ docker-compose build
-$ docker images -f reference=vocabdemy
+make env
+docker compose build
+docker images -f reference=vocabdemy
 REPOSITORY   TAG       IMAGE ID       CREATED          SIZE
 vocabdemy    0.1.0     9d094976ca7e   12 seconds ago   1.02GB
 ```
@@ -58,9 +66,9 @@ vocabdemy    0.1.0     9d094976ca7e   12 seconds ago   1.02GB
 ## Production Mode
 
 ```bash
-$ cp .env{.example,}
-$ make prod
-$ docker-compose ps
+make env
+make prod
+docker compose ps
   Name                Command               State           Ports         
 --------------------------------------------------------------------------
 pgweb      /usr/bin/pgweb --bind=0.0. ...   Up      0.0.0.0:8081->8081/tcp
