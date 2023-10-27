@@ -43,6 +43,10 @@ poetry-lock:
 poetry-export:
 	@poetry export -o requirements.txt --without-hashes
 
+.PHONY: rmi-dangling
+rmi-dangling:
+	@docker images --filter dangling=true -qa | xargs -I{} docker rmi {}
+
 .PHONY: images-filter
 images-filter:
 	docker images --filter reference=vocabdemy
