@@ -1,7 +1,7 @@
 .PHONY: clean
 clean:
-	find . | grep -E "__pycache__" | xargs rm -rf
-	find . | grep -E ".pytest_cache" | xargs rm -rf
+	@find ./app -name "__pycache__" | xargs rm -rf
+	@find ./app -name ".pytest_cache" | xargs rm -rf
 
 .PHONY: build
 build: test tmp_build
