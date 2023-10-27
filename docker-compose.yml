@@ -2,7 +2,7 @@
 version: '3'
 
 services:
-  python:
+  vocabdemy:
     image: vocabdemy:0.1.0
     container_name: python
     build:
@@ -13,10 +13,13 @@ services:
     restart: always
     ports:
       - '8000:8000'
+    networks:
+      - backend
     environment:
       POSTGRES_HOST: ${POSTGRES_HOST}
-
-  postgres:
+    depends_on:
+      - db
+  db:
     image: postgres:${POSTGRES_VERSION}
     hostname: postgres
     container_name: postgres
@@ -26,6 +29,10 @@ services:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - POSTGRES_DB=${POSTGRES_DB}
+    volumes:
+      - "dbdata:/var/lib/postgresql/data"
+    networks:
+      - backend
   pgweb:
     image: sosedoff/pgweb
     container_name: pgweb
@@ -33,8 +40,16 @@ services:
       - "8081:8081"
     restart: on-failure
     links:
-      - postgres:postgres
+      - db:db
     environment:
       - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}?sslmode=disable
     depends_on:
-      - postgres
+      - db
+    networks:
+      - backend
+
+networks:
+  backend:
+
+volumes:
+  dbdata:

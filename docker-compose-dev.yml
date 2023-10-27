@@ -2,7 +2,7 @@
 version: "3"
 
 services:
-  python:
+  vocabdemy:
     image: vocabdemy:test
     restart: always
     working_dir: /code
@@ -11,17 +11,18 @@ services:
     environment:
       POSTGRES_HOST: ${POSTGRES_HOST}
     depends_on:
-      - postgres
+      - db
     volumes:
       - ${PWD}/app:/code/app/
+    networks:
+      - backend
     command:
       - bash
       - -c
       - |
         uvicorn app.main:app --host 0.0.0.0 --reload
         sleep infinity
-
-  postgres:
+  db:
     image: postgres:${POSTGRES_VERSION}
     hostname: postgres
     ports:
@@ -30,6 +31,8 @@ services:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - POSTGRES_DB=${POSTGRES_DB}
+    networks:
+      - backend
   pgweb:
     image: sosedoff/pgweb
     container_name: pgweb
@@ -37,8 +40,13 @@ services:
       - "8081:8081"
     restart: on-failure
     links:
-      - postgres:postgres
+      - db:db
     environment:
       - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}?sslmode=disable
     depends_on:
-      - postgres
+      - db
+    networks:
+      - backend
+
+networks:
+  backend:
