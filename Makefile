@@ -21,11 +21,12 @@ clean-env:
 
 .PHONY: build
 build:
-	@docker compose build
+	@PYTHON_VERSION=$$(cat PYTHON_VERSION); \
+	PYTHON_VERSION=$${PYTHON_VERSION} docker compose build
 
 .PHONY: build-dev
 build-dev:
-	@PYTHON_VERSION=$$(grep PYTHON_VERSION .env | tr -d PYTHON_VERSION=); \
+	@PYTHON_VERSION=$$(cat PYTHON_VERSION); \
 	docker build -t vocabdemy:test -f Dockerfile.dev --build-arg PYTHON_VERSION=$${PYTHON_VERSION} .
 
 .PHONY: test
