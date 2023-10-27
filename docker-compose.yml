@@ -4,10 +4,8 @@ version: '3'
 services:
   vocabdemy:
     image: vocabdemy:0.1.0
-    container_name: python
+    container_name: vocabdemy
     build:
-      args:
-        - PYTHON_VERSION=${PYTHON_VERSION}
       context: ./
       dockerfile: ./Dockerfile
     restart: always
@@ -21,7 +19,6 @@ services:
       - db
   db:
     image: postgres:${POSTGRES_VERSION}
-    hostname: postgres
     container_name: postgres
     ports:
       - '5432:5432'
