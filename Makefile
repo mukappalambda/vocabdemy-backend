@@ -3,6 +3,14 @@ clean:
 	@find ./app -name "__pycache__" | xargs rm -rf
 	@find ./app -name ".pytest_cache" | xargs rm -rf
 
+.PHONY: install
+install:
+	@poetry install
+
+.PHONY: remove-poetry-env
+remove-poetry-env:
+	@poetry env remove $$(poetry env list | awk '{print $$1}')
+
 .PHONY: build
 build: test tmp_build
 
