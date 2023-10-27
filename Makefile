@@ -41,6 +41,10 @@ poetry-lock:
 poetry-export:
 	@poetry export -o requirements.txt --without-hashes
 
+.PHONY: images-filter
+images-filter:
+	docker images --filter reference=vocabdemy
+
 .PHONY: dev
 dev:
 	@docker compose -f docker-compose-dev.yml up
