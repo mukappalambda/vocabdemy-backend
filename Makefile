@@ -24,7 +24,7 @@ build: test tmp_build
 
 .PHONY: tmp_build
 tmp_build:
-	docker-compose build
+	@docker compose build
 
 .PHONY: test
 test: tmp_test clean
@@ -43,11 +43,11 @@ poetry-export:
 
 .PHONY: dev
 dev:
-	docker-compose -f docker-compose-dev.yml up
+	@docker compose -f docker-compose-dev.yml up
 
 .PHONY: prod
 prod:
-	docker-compose up -d
+	@docker compose up -d
 
 .PHONY: style
 style:
