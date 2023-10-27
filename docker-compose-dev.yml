@@ -3,21 +3,21 @@ version: "3"
 
 services:
   python:
-    image: python:${PYTHON_VERSION}
+    image: vocabdemy:test
     restart: always
     working_dir: /code
     ports:
       - "8000:8000"
     environment:
       POSTGRES_HOST: ${POSTGRES_HOST}
+    depends_on:
+      - postgres
     volumes:
       - ${PWD}/app:/code/app/
-      - ${PWD}/requirements.txt:/code/requirements.txt
     command:
       - bash
       - -c
       - |
-        pip install -r /code/requirements.txt
         uvicorn app.main:app --host 0.0.0.0 --reload
         sleep infinity
 
