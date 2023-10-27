@@ -7,7 +7,6 @@ authors = [
     "mukappalambda <maokailan24@gmail.com>",
 ]
 readme = "README.md"
-packages = [{include = "vocabdemy_backend"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
