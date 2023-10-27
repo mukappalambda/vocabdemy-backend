@@ -4,6 +4,7 @@ version: "3"
 services:
   vocabdemy:
     image: vocabdemy:test
+    container_name: vocabdemy
     restart: always
     working_dir: /code
     ports:
@@ -24,7 +25,7 @@ services:
         sleep infinity
   db:
     image: postgres:${POSTGRES_VERSION}
-    hostname: postgres
+    container_name: postgres
     ports:
       - "5432:5432"
     environment:
