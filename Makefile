@@ -17,6 +17,14 @@ test: tmp_test clean
 tmp_test:
 	cd ./app/src && pytest && cd ..
 
+.PHONY: poetry-lock
+poetry-lock:
+	@poetry lock --no-update
+
+.PHONY: poetry-export
+poetry-export:
+	@poetry export -o requirements.txt --without-hashes
+
 .PHONY: dev
 dev:
 	docker-compose -f docker-compose-dev.yml up
