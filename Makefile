@@ -20,10 +20,7 @@ clean-env:
 	@rm -f .env
 
 .PHONY: build
-build: test tmp_build
-
-.PHONY: tmp_build
-tmp_build:
+build:
 	@docker compose build
 
 .PHONY: test
