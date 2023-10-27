@@ -11,6 +11,14 @@ install:
 remove-poetry-env:
 	@poetry env remove $$(poetry env list | awk '{print $$1}')
 
+.PHONY: env
+env:
+	@cp .env.example .env
+
+.PHONY: clean-env
+clean-env:
+	@rm -f .env
+
 .PHONY: build
 build: test tmp_build
 
