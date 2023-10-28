@@ -5,6 +5,7 @@ from pydantic import BaseSettings
 
 class Settings(BaseSettings):
     API_V1_STR: str = "/v1"
+    APP_VERSION: str = os.environ.get("APP_VERSION", "dev")
     POSTGRES_HOST = os.environ.get("POSTGRES_HOST", "postgres")
     POSTGRES_PORT = os.environ.get("POSTGRES_PORT", 5432)
     POSTGRES_USER = os.environ.get("POSTGRES_USER", "postgres")

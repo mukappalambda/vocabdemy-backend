@@ -7,10 +7,10 @@ from app.db.session import engine
 
 Base.metadata.create_all(bind=engine)
 
-app = FastAPI()
+app = FastAPI(version=settings.APP_VERSION)
 app.include_router(router=api_router, prefix=settings.API_V1_STR)
 
 
 @app.get("/")
 def read_root():
-    return {"Version": "0.0.1", "Description": "Welcome to Vocabdemy."}
+    return {"Version": settings.APP_VERSION, "Description": "Welcome to Vocabdemy."}
