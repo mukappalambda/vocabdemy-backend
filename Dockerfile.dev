@@ -1,6 +1,12 @@
 ARG PYTHON_VERSION
 FROM python:${PYTHON_VERSION}
 
+ARG UID=1000
+ARG GID=1000
+
+RUN groupadd --system -g ${GID} "appuser"
+RUN useradd -m --system -u ${UID} -g ${GID} "appuser"
+
 RUN pip install --upgrade pip \
     && apt-get update \
     && apt-get install -y --no-install-recommends gcc libpq-dev build-essential
@@ -17,5 +23,7 @@ RUN pip install --no-cache-dir -r requirements.txt \
     && rm -rf /root/.cache \
     && rm -rf /var/apt/lists/* \
     && rm -rf /var/cache/apt/*
+
+USER "appuser"
 
 CMD ["/bin/bash"]
