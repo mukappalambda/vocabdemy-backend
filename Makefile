@@ -1,3 +1,5 @@
+SHELL := /bin/bash
+
 .PHONY: clean
 clean:
 	@find ./app -name "__pycache__" | xargs rm -rf
@@ -30,11 +32,10 @@ build-dev:
 	docker build -t vocabdemy:test -f Dockerfile.dev --build-arg PYTHON_VERSION=$${PYTHON_VERSION} .
 
 .PHONY: test
-test: tmp_test clean
-
-.PHONY: tmp_test
-tmp_test:
-	cd ./app/src && pytest && cd ..
+test:
+	@pushd ./app; \
+	POSTGRES_DB_URL=sqlite:///demo poetry run pytest; \
+	popd
 
 .PHONY: poetry-lock
 poetry-lock:
