@@ -14,7 +14,6 @@ class TestVocab:
         assert response.status_code == status.HTTP_201_CREATED
 
     def test_update_vocab(self):
-
         id = 1
 
         response = client.put(f"/v1/vocabs/{id}", json={"vocab": "cba"})
@@ -22,7 +21,6 @@ class TestVocab:
         assert response.status_code == status.HTTP_204_NO_CONTENT
 
     def test_delete_vocab(self):
-
         id = 1
 
         response = client.delete(
