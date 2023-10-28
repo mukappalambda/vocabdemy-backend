@@ -24,12 +24,18 @@ clean-env:
 .PHONY: build
 build:
 	@PYTHON_VERSION=$$(cat PYTHON_VERSION); \
-	docker build --build-arg PYTHON_VERSION=$${PYTHON_VERSION} .
+	APP_VERSION=$$(poetry run cz version -p); \
+	docker build -t vocabdemy:$${APP_VERSION} \
+	--build-arg PYTHON_VERSION=$${PYTHON_VERSION} \
+	--build-arg APP_VERSION=$${APP_VERSION} .
 
 .PHONY: build-dev
 build-dev:
 	@PYTHON_VERSION=$$(cat PYTHON_VERSION); \
-	docker build -t vocabdemy:test -f Dockerfile.dev --build-arg PYTHON_VERSION=$${PYTHON_VERSION} .
+	APP_VERSION=$$(poetry run cz version -p); \
+	docker build -t vocabdemy:test -f Dockerfile.dev \
+	--build-arg PYTHON_VERSION=$${PYTHON_VERSION} \
+	--build-arg APP_VERSION=$${APP_VERSION} .
 
 .PHONY: test
 test:
