@@ -22,7 +22,7 @@ clean-env:
 .PHONY: build
 build:
 	@PYTHON_VERSION=$$(cat PYTHON_VERSION); \
-	PYTHON_VERSION=$${PYTHON_VERSION} docker compose build
+	docker build --build-arg PYTHON_VERSION=$${PYTHON_VERSION} .
 
 .PHONY: build-dev
 build-dev:
