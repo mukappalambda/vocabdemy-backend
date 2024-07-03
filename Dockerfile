@@ -1,7 +1,7 @@
 ARG PYTHON_VERSION
 FROM python:${PYTHON_VERSION} as build
 
-RUN pip install --upgrade pip \
+RUN pip install --no-cache-dir --upgrade pip==24.1.1 \
     && apt-get update \
     && apt-get install -y --no-install-recommends gcc libpq-dev build-essential
 
@@ -9,9 +9,9 @@ RUN python -m venv /opt/venv
 
 ENV PATH="/opt/venv/bin:$PATH"
 
-COPY requirements.txt requirements.txt
+COPY requirements.txt /requirements.txt
 
-RUN pip install --no-cache-dir -r requirements.txt \
+RUN pip install --no-cache-dir -r /requirements.txt \
     && apt-get autoremove -y gcc build-essential \
     && apt-get clean -y \
     && rm -rf /root/.cache \
@@ -24,7 +24,7 @@ ARG APP_VERSION
 ENV APP_VERSION=${APP_VERSION}
 
 RUN apt-get update \
-    && apt-get install -y libpq-dev \
+    && apt-get install -y --no-install-recommends libpq-dev \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/*
 
