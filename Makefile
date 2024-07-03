@@ -49,7 +49,7 @@ poetry-lock:
 
 .PHONY: poetry-export
 poetry-export:
-	@poetry export -o requirements.txt --without-hashes
+	@poetry export -o requirements.txt --without-hashes --without=dev
 
 .PHONY: rmi-dangling
 rmi-dangling:
