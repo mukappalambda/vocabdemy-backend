@@ -22,7 +22,7 @@ clean-env:
 	@rm -f .env
 
 .PHONY: build
-build:
+build: install
 	@PYTHON_VERSION=$$(cat PYTHON_VERSION); \
 	APP_VERSION=$$(poetry run cz version -p); \
 	docker build -t vocabdemy:$${APP_VERSION} \
