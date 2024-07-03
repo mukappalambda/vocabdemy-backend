@@ -69,4 +69,5 @@ prod:
 
 .PHONY: style
 style:
-	isort --profile black . && black .
+	@poetry run ruff format ./app
+	@poetry run ruff check --select I app/*.py --fix
