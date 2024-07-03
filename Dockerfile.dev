@@ -7,20 +7,21 @@ ENV APP_VERSION=${APP_VERSION}
 ARG UID=1000
 ARG GID=1000
 
-RUN groupadd --system -g ${GID} "appuser"
-RUN useradd -m --system -u ${UID} -g ${GID} "appuser"
+RUN groupadd --system -g ${GID} "appuser" \
+    && useradd -m --system -u ${UID} -g ${GID} "appuser"
 
-RUN pip install --upgrade pip \
+RUN pip install --no-cache-dir --upgrade pip==24.1.1 \
     && apt-get update \
-    && apt-get install -y --no-install-recommends gcc libpq-dev build-essential
+    && apt-get install -y --no-install-recommends gcc libpq-dev build-essential \
+    && rm -rf /var/lib/apt/lists/*
 
 RUN python -m venv /opt/venv
 
 ENV PATH="/opt/venv/bin:$PATH"
 
-COPY requirements.txt requirements.txt
+COPY requirements.txt /requirements.txt
 
-RUN pip install --no-cache-dir -r requirements.txt \
+RUN pip install --no-cache-dir -r /requirements.txt \
     && apt-get autoremove -y gcc build-essential \
     && apt-get clean -y \
     && rm -rf /root/.cache \

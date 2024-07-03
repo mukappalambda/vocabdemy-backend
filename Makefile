@@ -39,9 +39,7 @@ build-dev:
 
 .PHONY: test
 test:
-	@pushd ./app; \
-	POSTGRES_DB_URL=sqlite:///demo poetry run pytest; \
-	popd
+	@POSTGRES_DB_URL=sqlite:///demo poetry run pytest
 
 .PHONY: poetry-lock
 poetry-lock:
@@ -49,7 +47,8 @@ poetry-lock:
 
 .PHONY: poetry-export
 poetry-export:
-	@poetry export -o requirements.txt --without-hashes
+	@poetry export -o requirements.txt --without-hashes --without=dev
+	@poetry export -o test-requirements.txt --without-hashes --with=dev
 
 .PHONY: rmi-dangling
 rmi-dangling:
@@ -69,4 +68,5 @@ prod:
 
 .PHONY: style
 style:
-	isort --profile black . && black .
+	@poetry run ruff format ./app
+	@poetry run ruff check --select I app/*.py --fix

@@ -4,7 +4,7 @@ from fastapi.encoders import jsonable_encoder
 from sqlalchemy.orm import Session
 
 from app.models.vocab import Vocab
-from app.schemas.vocab import UpdateVocabObject, VocabBase
+from app.schemas.vocab import VocabBase
 
 
 def get_multi(db: Session) -> List[Vocab]:
