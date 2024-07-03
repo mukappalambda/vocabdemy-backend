@@ -1,5 +1,5 @@
 ---
-version: '3'
+version: "3"
 
 services:
   vocabdemy:
@@ -10,18 +10,19 @@ services:
       dockerfile: ./Dockerfile
     restart: always
     ports:
-      - '8000:8000'
+      - "8000:8000"
     networks:
       - backend
     environment:
       POSTGRES_HOST: ${POSTGRES_HOST}
     depends_on:
-      - db
+      db:
+        condition: service_healthy
   db:
     image: postgres:${POSTGRES_VERSION}
     container_name: postgres
     ports:
-      - '5432:5432'
+      - "5432:5432"
     environment:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
