@@ -55,8 +55,8 @@ make poetry-lock && make poetry-export
 
 ```bash
 make env
-docker compose build
-docker images -f reference=vocabdemy
+make build
+make images-filter
 REPOSITORY   TAG       IMAGE ID       CREATED          SIZE
 vocabdemy    0.1.0     9d094976ca7e   12 seconds ago   1.02GB
 ```
@@ -75,7 +75,7 @@ pgweb      /usr/bin/pgweb --bind=0.0. ...   Up      0.0.0.0:8081->8081/tcp
 postgres   docker-entrypoint.sh postgres    Up      0.0.0.0:5432->5432/tcp
 python     uvicorn app.main:app --hos ...   Up      0.0.0.0:8000->8000/tcp
 # tear down the stack
-$ docker-compose down -v
+$ docker-compose down -v --timeout 1
 ```
 
 ## Test
