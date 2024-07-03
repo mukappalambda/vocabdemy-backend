@@ -7,7 +7,7 @@ clean:
 
 .PHONY: install
 install:
-	@poetry install
+	@poetry install --no-root
 
 .PHONY: remove-poetry-env
 remove-poetry-env:
