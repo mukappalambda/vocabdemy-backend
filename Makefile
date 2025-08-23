@@ -1,72 +1,74 @@
 SHELL := /bin/bash
 
-.PHONY: clean
-clean:
+help: ## Show help message
+	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST) | sort
+
+clean: ## Remove __pycache__ and .pytest_cache
+	@echo "$(WHALE) $@"
 	@find ./app -name "__pycache__" | xargs rm -rf
 	@find ./app -name ".pytest_cache" | xargs rm -rf
 
-.PHONY: install
-install:
-	@poetry install --no-root
+install: ## Install project dependencies
+	@echo "$(WHALE) $@"
+	@uv sync
 
-.PHONY: remove-poetry-env
-remove-poetry-env:
-	@poetry env remove $$(poetry env list | awk '{print $$1}')
+remove-python-env: ## Remove the virtual environement
+	@echo "$(WHALE) $@"
+	@uv venv -c
 
-.PHONY: env
-env:
+env: ## Create .env
+	@echo "$(WHALE) $@"
 	@cp .env.example .env
 
-.PHONY: clean-env
 clean-env:
+	@echo "$(WHALE) $@"
 	@rm -f .env
 
-.PHONY: build
-build: install
+build: install ## Build the container image
+	@echo "$(WHALE) $@"
 	@PYTHON_VERSION=$$(cat PYTHON_VERSION); \
 	APP_VERSION=$$(poetry run cz version -p); \
 	docker build -t vocabdemy:$${APP_VERSION} \
 	--build-arg PYTHON_VERSION=$${PYTHON_VERSION} \
 	--build-arg APP_VERSION=$${APP_VERSION} .
 
-.PHONY: build-dev
-build-dev:
+build-dev: ## Build the dev container image
+	@echo "$(WHALE) $@"
 	@PYTHON_VERSION=$$(cat PYTHON_VERSION); \
 	APP_VERSION=$$(poetry run cz version -p); \
 	docker build -t vocabdemy:test -f Dockerfile.dev \
 	--build-arg PYTHON_VERSION=$${PYTHON_VERSION} \
 	--build-arg APP_VERSION=$${APP_VERSION} .
 
-.PHONY: test
-test:
-	@POSTGRES_DB_URL=sqlite:///demo poetry run pytest
+test: ## Run tests
+	@echo "$(WHALE) $@"
+	@POSTGRES_DB_URL=sqlite:///demo uv run pytest
 
-.PHONY: poetry-lock
-poetry-lock:
-	@poetry lock --no-update
+update-lockfile: ## Update the project's lockfile
+	@echo "$(WHALE) $@"
+	@uv lock --frozen
 
-.PHONY: poetry-export
-poetry-export:
-	@poetry export -o requirements.txt --without-hashes --without=dev
-	@poetry export -o test-requirements.txt --without-hashes --with=dev
+export-requirements: ## Export the lockfile to requirements.txt
+	@echo "$(WHALE) $@"
+	@uv export --no-dev --no-hashes --no-annotate > requirements.txt
 
-.PHONY: rmi-dangling
-rmi-dangling:
+rmi-dangling: ## Remove dangling container images
+	@echo "$(WHALE) $@"
 	@docker images --filter dangling=true -qa | xargs -I{} docker rmi {}
 
-.PHONY: images-filter
-images-filter:
-	docker images --filter reference=vocabdemy
+images-filter: ## List images
+	@echo "$(WHALE) $@"
+	@docker images --filter reference=vocabdemy
 
-.PHONY: dev
-dev:
+dev: ## Run the container stack for development
+	@echo "$(WHALE) $@"
 	@docker compose -f docker-compose-dev.yml up
 
-.PHONY: prod
-prod:
+prod: ## Run the container stack for production
+	@echo "$(WHALE) $@"
 	@docker compose up -d
 
-.PHONY: style
-style:
-	@poetry run ruff format ./app
-	@poetry run ruff check --select I app/*.py --fix
+style: ## Format source code
+	@echo "$(WHALE) $@"
+	@uv run ruff format ./app
+	@uv run ruff check --extend-select I app
