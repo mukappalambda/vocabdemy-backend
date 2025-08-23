@@ -1,9 +1,6 @@
----
-version: "3"
-
 services:
   vocabdemy:
-    image: vocabdemy:0.1.0
+    image: vocabdemy:${TAG}
     container_name: vocabdemy
     build:
       context: ./

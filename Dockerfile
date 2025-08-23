@@ -1,7 +1,7 @@
 ARG PYTHON_VERSION
-FROM python:${PYTHON_VERSION} as build
+FROM python:${PYTHON_VERSION:-3.13.7-slim} AS build
 
-RUN pip install --no-cache-dir --upgrade pip==24.1.1 \
+RUN pip install --no-cache-dir --upgrade pip==25.2 \
     && apt-get update \
     && apt-get install -y --no-install-recommends gcc libpq-dev build-essential
 
@@ -18,7 +18,7 @@ RUN pip install --no-cache-dir -r /requirements.txt \
     && rm -rf /var/apt/lists/* \
     && rm -rf /var/cache/apt/*
 
-FROM python:${PYTHON_VERSION}
+FROM python:${PYTHON_VERSION:-3.13.7-slim}
 
 ARG APP_VERSION
 ENV APP_VERSION=${APP_VERSION}
