@@ -19,6 +19,7 @@ remove-python-env: ## Remove the virtual environement
 env: ## Create .env
 	@echo "$(WHALE) $@"
 	@cp .env.example .env
+	@echo "TAG=$$(git rev-parse --short HEAD)" >> .env
 
 clean-env:
 	@echo "$(WHALE) $@"
@@ -27,10 +28,10 @@ clean-env:
 build: install ## Build the container image
 	@echo "$(WHALE) $@"
 	@PYTHON_VERSION=$$(cat PYTHON_VERSION); \
-	APP_VERSION=$$(poetry run cz version -p); \
-	docker build -t vocabdemy:$${APP_VERSION} \
+	TAG=$$(git rev-parse --short HEAD); \
+	docker build -t vocabdemy:$${TAG} \
 	--build-arg PYTHON_VERSION=$${PYTHON_VERSION} \
-	--build-arg APP_VERSION=$${APP_VERSION} .
+	--build-arg APP_VERSION=$${TAG} .
 
 build-dev: ## Build the dev container image
 	@echo "$(WHALE) $@"
@@ -54,7 +55,7 @@ export-requirements: ## Export the lockfile to requirements.txt
 
 rmi-dangling: ## Remove dangling container images
 	@echo "$(WHALE) $@"
-	@docker images --filter dangling=true -qa | xargs -I{} docker rmi {}
+	@docker images --filter dangling=true --filter reference=vocabdemy -qa | xargs -I{} docker rmi {}
 
 images-filter: ## List images
 	@echo "$(WHALE) $@"
@@ -66,7 +67,7 @@ dev: ## Run the container stack for development
 
 prod: ## Run the container stack for production
 	@echo "$(WHALE) $@"
-	@docker compose up -d
+	@docker compose up -d --wait
 
 style: ## Format source code
 	@echo "$(WHALE) $@"
