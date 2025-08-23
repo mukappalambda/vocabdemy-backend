@@ -80,8 +80,10 @@ $ docker-compose down -v --timeout 1
 
 ## MCP
 
-```
-mcp dev server.py 
+```console
+$ source .venv/bin/activate
+$ docker run -dt --name postgres -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=demo postgres
+$ mcp dev server.py 
 ```
 
 ## Test
