@@ -5,7 +5,7 @@ help: ## Show help message
 
 clean: ## Remove __pycache__ and .pytest_cache
 	@echo "$(WHALE) $@"
-	@find ./app -name "__pycache__" | xargs rm -rf
+	@find . -type d -name '__pycache__' | xargs -I{} rm -rf {}
 	@find ./app -name ".pytest_cache" | xargs rm -rf
 
 install: ## Install project dependencies
