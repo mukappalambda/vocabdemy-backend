@@ -78,6 +78,12 @@ python     uvicorn app.main:app --hos ...   Up      0.0.0.0:8000->8000/tcp
 $ docker-compose down -v --timeout 1
 ```
 
+## MCP
+
+```
+mcp dev server.py 
+```
+
 ## Test
 
 ```bash
