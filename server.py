@@ -3,34 +3,14 @@
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 from dataclasses import dataclass
+from datetime import datetime
+from typing import cast
 
 from mcp.server.fastmcp import Context, FastMCP
 from mcp.server.session import ServerSession
 
-from app.db.session import SessionLocal
-from app.db.session import engine
-from app.db.base import Base
-
-Base.metadata.create_all(bind=engine)
-
-# Mock database class for example
-class Database:
-    """Mock database class for example."""
-
-    @classmethod
-    async def connect(cls) -> "Database":
-        """Connect to database."""
-        return cls()
-
-    async def disconnect(self) -> None:
-        """Disconnect from database."""
-        pass
-
-    def query(self) -> str:
-        """Execute a query."""
-        with SessionLocal.begin() as session:
-            result = session.execute("SELECT now()", None)
-            return result.scalar()
+from app.db.database import Database
+from app.models.vocab import Vocab
 
 
 @dataclass
@@ -56,9 +36,27 @@ async def app_lifespan(server: FastMCP) -> AsyncIterator[AppContext]:
 mcp = FastMCP("My App", lifespan=app_lifespan)
 
 
-# Access type-safe lifespan context in tools
 @mcp.tool()
-def query_db(ctx: Context[ServerSession, AppContext]) -> str:
+def get_vocabs(ctx: Context[ServerSession, AppContext]) -> str:
     """Tool that uses initialized resources."""
-    db = ctx.request_context.lifespan_context.db
-    return db.query()
+    sm = ctx.request_context.lifespan_context.db.get_session_maker()
+    with sm.begin() as session:
+        query = session.query(Vocab)
+        vocabs = query.all()
+        json_str = ",".join([cast(str, vocab.vocab) for vocab in vocabs])
+        return json_str
+
+
+@mcp.tool()
+def delete_vocab(ctx: Context[ServerSession, AppContext], vocab: str) -> str:
+    """Tool to delete a vocabulary entry."""
+    sm = ctx.request_context.lifespan_context.db.get_session_maker()
+    with sm.begin() as session:
+        query = session.query(Vocab).filter(Vocab.vocab == vocab)
+        vocab_to_delete = query.first()
+        if vocab_to_delete:
+            session.delete(vocab_to_delete)
+            session.commit()
+            return f"Deleted vocab: {vocab} at {datetime.now()}"
+
+        return f"Vocab '{vocab}' not found."
