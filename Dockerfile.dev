@@ -1,5 +1,5 @@
 ARG PYTHON_VERSION
-FROM python:${PYTHON_VERSION}
+FROM python:${PYTHON_VERSION-3.13.7-slim}
 
 ARG APP_VERSION
 ENV APP_VERSION=${APP_VERSION}
@@ -10,7 +10,7 @@ ARG GID=1000
 RUN groupadd --system -g ${GID} "appuser" \
     && useradd -m --system -u ${UID} -g ${GID} "appuser"
 
-RUN pip install --no-cache-dir --upgrade pip==24.1.1 \
+RUN pip install --no-cache-dir --upgrade pip==25.2 \
     && apt-get update \
     && apt-get install -y --no-install-recommends gcc libpq-dev build-essential \
     && rm -rf /var/lib/apt/lists/*
