@@ -36,10 +36,10 @@ build: install ## Build the container image
 build-dev: ## Build the dev container image
 	@echo "$(WHALE) $@"
 	@PYTHON_VERSION=$$(cat PYTHON_VERSION); \
-	APP_VERSION=$$(poetry run cz version -p); \
-	docker build -t vocabdemy:test -f Dockerfile.dev \
+	TAG=$$(git rev-parse --short HEAD); \
+	docker build -t vocabdemy:$${TAG} -f Dockerfile.dev \
 	--build-arg PYTHON_VERSION=$${PYTHON_VERSION} \
-	--build-arg APP_VERSION=$${APP_VERSION} .
+	--build-arg APP_VERSION=$${TAG} .
 
 test: ## Run tests
 	@echo "$(WHALE) $@"

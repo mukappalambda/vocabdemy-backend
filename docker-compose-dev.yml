@@ -1,9 +1,6 @@
----
-version: "3"
-
 services:
   vocabdemy:
-    image: vocabdemy:test
+    image: vocabdemy:${TAG}
     container_name: vocabdemy
     restart: always
     working_dir: /code
