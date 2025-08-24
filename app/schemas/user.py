@@ -1,7 +1,7 @@
-from datetime import datetime
+from datetime import UTC, datetime
 from typing import Union
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class UserBase(BaseModel):
@@ -11,7 +11,7 @@ class UserBase(BaseModel):
 
 
 class UserRead(UserBase):
-    created_at: Union[datetime, None]
+    created_at: Union[datetime, None] = None
 
 
 class UserCreate(UserBase):
@@ -23,12 +23,10 @@ class UserUpdate(UserBase):
 
 
 class UserInDBBase(UserBase):
-    id: int = Field(example=1)
-    created_at: datetime = Field(example=datetime.utcnow())
-    updated_at: Union[datetime, None]
-
-    class Config:
-        orm_mode = True
+    id: int = Field(examples=[1])
+    created_at: datetime = Field(examples=[datetime.now(UTC)])
+    updated_at: Union[datetime, None] = None
+    model_config = ConfigDict(from_attributes=True)
 
 
 class User(UserInDBBase):
