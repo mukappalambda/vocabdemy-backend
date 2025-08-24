@@ -28,7 +28,7 @@ def update(db: Session, id: int, vocab_in) -> Vocab:
     """
     Receive vocab id and get the data
     """
-    vocab = db.query(Vocab).get(id)
+    vocab = db.get(Vocab, id)
 
     for k, v in vocab_in:
         setattr(vocab, k, v)
