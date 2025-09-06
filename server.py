@@ -4,7 +4,7 @@ from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 from dataclasses import dataclass
 from datetime import datetime
-from typing import cast
+from typing import List, cast
 
 from mcp.server.fastmcp import Context, FastMCP
 from mcp.server.session import ServerSession
@@ -37,13 +37,23 @@ mcp = FastMCP("My App", lifespan=app_lifespan)
 
 
 @mcp.tool()
-def add_vocabs(ctx: Context[ServerSession, AppContext], vocab: str) -> str:
+def add_vocab(ctx: Context[ServerSession, AppContext], vocab: str) -> str:
     sm = ctx.request_context.lifespan_context.db.get_session_maker()
     with sm.begin() as session:
         vocab = Vocab(vocab=vocab)
         session.add(vocab)
         session.commit()
         return f"{vocab} is added successfully"
+
+
+@mcp.tool()
+def add_vocabs(ctx: Context[ServerSession, AppContext], vocabs: List[str]) -> str:
+    sm = ctx.request_context.lifespan_context.db.get_session_maker()
+    with sm.begin() as session:
+        vocab_objs = [Vocab(vocab=vocab) for vocab in vocabs]
+        session.add_all(vocab_objs)
+        session.commit()
+        return f"{len(vocab_objs)} vocabs are added successfully"
 
 
 @mcp.tool()
@@ -70,3 +80,19 @@ def delete_vocab(ctx: Context[ServerSession, AppContext], vocab: str) -> str:
             return f"Deleted vocab: {vocab} at {datetime.now()}"
 
         return f"Vocab '{vocab}' not found."
+
+
+@mcp.tool()
+def delete_vocabs(ctx: Context[ServerSession, AppContext], vocabs: List[str]) -> str:
+    """Tool to delete multiple vocabulary entries."""
+    sm = ctx.request_context.lifespan_context.db.get_session_maker()
+    with sm.begin() as session:
+        query = session.query(Vocab).filter(Vocab.vocab.in_(vocabs))
+        vocab_to_delete = query.all()
+        if vocab_to_delete:
+            for vocab in vocab_to_delete:
+                session.delete(vocab)
+            session.commit()
+            return f"Deleted {len(vocab_to_delete)} vocabs at {datetime.now()}"
+
+        return "No matching vocabs found."
