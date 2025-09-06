@@ -37,6 +37,16 @@ mcp = FastMCP("My App", lifespan=app_lifespan)
 
 
 @mcp.tool()
+def add_vocabs(ctx: Context[ServerSession, AppContext], vocab: str) -> str:
+    sm = ctx.request_context.lifespan_context.db.get_session_maker()
+    with sm.begin() as session:
+        vocab = Vocab(vocab=vocab)
+        session.add(vocab)
+        session.commit()
+        return f"{vocab} is added successfully"
+
+
+@mcp.tool()
 def get_vocabs(ctx: Context[ServerSession, AppContext]) -> str:
     """Tool that uses initialized resources."""
     sm = ctx.request_context.lifespan_context.db.get_session_maker()
