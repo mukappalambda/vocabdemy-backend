@@ -53,6 +53,10 @@ export-requirements: ## Export the lockfile to requirements.txt
 	@echo "$(WHALE) $@"
 	@uv export --no-dev --no-hashes --no-annotate > requirements.txt
 
+rmi-all-images: ## Remove all images with reference "vocabdemy"
+	@echo "$(WHALE) $@"
+	@docker images --filter reference=vocabdemy -aq | xargs -I{} docker rmi {}
+
 rmi-dangling: ## Remove dangling container images
 	@echo "$(WHALE) $@"
 	@docker images --filter dangling=true --filter reference=vocabdemy -qa | xargs -I{} docker rmi {}
