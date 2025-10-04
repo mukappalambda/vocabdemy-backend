@@ -35,6 +35,7 @@ make install
 ```
 
 ---
+
 ## Development Mode
 
 ```bash
@@ -69,7 +70,7 @@ vocabdemy    0.1.0     9d094976ca7e   12 seconds ago   1.02GB
 make env
 make prod
 docker compose ps
-  Name                Command               State           Ports         
+  Name                Command               State           Ports
 --------------------------------------------------------------------------
 pgweb      /usr/bin/pgweb --bind=0.0. ...   Up      0.0.0.0:8081->8081/tcp
 postgres   docker-entrypoint.sh postgres    Up      0.0.0.0:5432->5432/tcp
@@ -80,10 +81,25 @@ $ docker-compose down -v --timeout 1
 
 ## MCP
 
-```console
-$ source .venv/bin/activate
-$ docker run -dt --name postgres -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=demo postgres
-$ mcp dev server.py 
+**Run the MCP server with the MCP Inspector**
+
+Enter the virtual environment:
+
+```bash
+source .venv/bin/activate
+```
+
+Use the in-memory database:
+
+```bash
+mcp dev server.py
+```
+
+Use the postgres database:
+
+```bash
+docker run -dt --name postgres -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=demo postgres
+DB_DSN="postgresql://postgres:postgres@localhost:5432/demo" mcp dev server.py
 ```
 
 ## Test
