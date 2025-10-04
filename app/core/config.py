@@ -11,10 +11,7 @@ class Settings(BaseSettings):
     DB_USER: str = os.environ.get("DB_USER", "postgres")
     DB_PASSWORD: str = os.environ.get("DB_PASSWORD", "postgres")
     DB_NAME: str = os.environ.get("DB_NAME", "demo")
-    DB_DSN: str = os.environ.get(
-        "DB_DSN",
-        (f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"),
-    )
+    DB_DSN: str = os.environ.get("DB_DSN", "sqlite://")
 
 
 settings = Settings()
