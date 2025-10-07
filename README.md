@@ -2,6 +2,8 @@
 
 A Python App for Vocabulary Memorizer
 
+[![Actions status](https://github.com/mukappalambda/vocabdemy-backend/actions/workflows/ci.yml/badge.svg)](https://github.com/mukappalambda/vocabdemy-backend/actions)
+
 ```
                                                    __        __
                            _   ______  _________ _/ /_  ____/ /__  ____ ___  __  __
