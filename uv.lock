@@ -907,11 +907,13 @@ dependencies = [
 
 [package.dev-dependencies]
 dev = [
-    { name = "commitizen" },
     { name = "pylint" },
     { name = "pyright" },
     { name = "pytest" },
     { name = "ruff" },
+]
+docs = [
+    { name = "commitizen" },
 ]
 
 [package.metadata]
@@ -930,12 +932,12 @@ requires-dist = [
 
 [package.metadata.requires-dev]
 dev = [
-    { name = "commitizen", specifier = ">=4.8.3" },
     { name = "pylint", specifier = ">=3.3.8" },
     { name = "pyright", specifier = ">=1.1.404" },
     { name = "pytest", specifier = ">=8.4.1" },
     { name = "ruff", specifier = ">=0.12.10" },
 ]
+docs = [{ name = "commitizen", specifier = ">=4.8.3" }]
 
 [[package]]
 name = "wcwidth"

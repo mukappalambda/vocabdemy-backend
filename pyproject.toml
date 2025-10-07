@@ -19,9 +19,11 @@ dependencies = [
 
 [dependency-groups]
 dev = [
-    "commitizen>=4.8.3",
     "pylint>=3.3.8",
     "pyright>=1.1.404",
     "pytest>=8.4.1",
     "ruff>=0.12.10",
+]
+docs = [
+    "commitizen>=4.8.3",
 ]
