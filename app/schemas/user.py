@@ -1,4 +1,10 @@
-from datetime import UTC, datetime
+import datetime
+
+try:
+    UTC = datetime.UTC
+except AttributeError:
+    UTC = datetime.timezone.utc
+
 from typing import Union
 
 from pydantic import BaseModel, ConfigDict, Field
@@ -11,7 +17,7 @@ class UserBase(BaseModel):
 
 
 class UserRead(UserBase):
-    created_at: Union[datetime, None] = None
+    created_at: Union[datetime.datetime, None] = None
 
 
 class UserCreate(UserBase):
@@ -24,8 +30,8 @@ class UserUpdate(UserBase):
 
 class UserInDBBase(UserBase):
     id: int = Field(examples=[1])
-    created_at: datetime = Field(examples=[datetime.now(UTC)])
-    updated_at: Union[datetime, None] = None
+    created_at: datetime.datetime = Field(examples=[datetime.datetime.now(UTC)])
+    updated_at: Union[datetime.datetime, None] = None
     model_config = ConfigDict(from_attributes=True)
 
 
