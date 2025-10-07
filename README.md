@@ -2,8 +2,6 @@
 
 A Python App for Vocabulary Memorizer
 
-[![CircleCI](https://circleci.com/gh/mukappalambda/vocabdemy-backend.svg?style=shield)](https://circleci.com/gh/mukappalambda/vocabdemy-backend)
-
 ```
                                                    __        __
                            _   ______  _________ _/ /_  ____/ /__  ____ ___  __  __
