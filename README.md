@@ -102,8 +102,8 @@ docker run -dt --name postgres -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRE
 DB_DSN="postgresql://postgres:postgres@localhost:5432/demo" mcp dev server.py
 ```
 
-## Test
+## Running Tests
 
 ```bash
-curl localhost:8000
+make test
 ```
