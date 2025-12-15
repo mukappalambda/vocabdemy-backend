@@ -5,13 +5,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
-      - uses: chartboost/ruff-action@v1
+      - uses: astral-sh/ruff-action@57714a7c8a2e59f32539362ba31877a1957dded1 # v3.5.1
         with:
           src: "./app"
-          version: 0.12.10
+          version: 0.14.9
           args: "format --check"
-      - uses: chartboost/ruff-action@v1
-        with:
-          src: "./app"
-          version: 0.12.10
-          args: "check --extend-select I"
+      - run: ruff check --extend-select I
