@@ -4,6 +4,8 @@ A Python App for Vocabulary Memorizer
 
 [![MIT licensed](https://img.shields.io/github/license/mukappalambda/vocabdemy-backend)](https://github.com/mukappalambda/vocabdemy-backend/blob/main/LICENSE)
 [![Actions status](https://github.com/mukappalambda/vocabdemy-backend/actions/workflows/ci.yml/badge.svg)](https://github.com/mukappalambda/vocabdemy-backend/actions)
+[![Lint](https://github.com/mukappalambda/vocabdemy-backend/actions/workflows/black.yml/badge.svg)](https://github.com/mukappalambda/vocabdemy-backend/actions/workflows/black.yml)
+[![Ruff](https://github.com/mukappalambda/vocabdemy-backend/actions/workflows/ruff.yml/badge.svg)](https://github.com/mukappalambda/vocabdemy-backend/actions/workflows/ruff.yml)
 
 ```
                                                    __        __
