@@ -8,7 +8,7 @@ certifi==2026.1.4
 cffi==2.0.0 ; platform_python_implementation != 'PyPy'
 click==8.3.1
 colorama==0.4.6 ; sys_platform == 'win32'
-cryptography==46.0.3
+cryptography==46.0.5
 exceptiongroup==1.3.1 ; python_full_version < '3.11'
 fastapi==0.128.0
 greenlet==3.3.1 ; platform_machine == 'AMD64' or platform_machine == 'WIN32' or platform_machine == 'aarch64' or platform_machine == 'amd64' or platform_machine == 'ppc64le' or platform_machine == 'win32' or platform_machine == 'x86_64'
