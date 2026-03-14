@@ -47,7 +47,7 @@ test: ## Run tests
 
 update-lockfile: ## Update the project's lockfile
 	@echo "$(WHALE) $@"
-	@uv lock --frozen
+	@uv lock
 
 export-requirements: ## Export the lockfile to requirements.txt
 	@echo "$(WHALE) $@"
