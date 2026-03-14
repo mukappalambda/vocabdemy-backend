@@ -3,10 +3,9 @@ SHELL := /bin/bash
 help: ## Show help message
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST) | sort
 
-clean: ## Remove __pycache__ and .pytest_cache
+clean: ## Remove all untracked files and directories (git clean -xdf)
 	@echo "$(WHALE) $@"
-	@find . -type d -name '__pycache__' | xargs -I{} rm -rf {}
-	@find ./app -name ".pytest_cache" | xargs rm -rf
+	@git clean -xdf
 
 install: ## Install project dependencies
 	@echo "$(WHALE) $@"
